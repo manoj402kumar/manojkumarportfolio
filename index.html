@@ -1,1 +1,563 @@
 # manojkumarportfolio
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manoj Kumar - Portfolio</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #209cff;
+            --secondary-color: #478683;
+            --background-color: #1a1a1a;
+            --text-color: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --card-border: rgba(255, 255, 255, 0.2);
+        }
+
+        [data-theme="light"] {
+            --background-color: #f0f0f0;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --card-border: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        header {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 10.01%);
+            background-size: 20px 20px;
+            animation: moveBackground 10s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-200px); }
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .theme-toggle ion-icon {
+            font-size: 24px;
+            color: var(--text-color);
+        }
+
+        /* Navigation Menu */
+        .navigation {
+            display: flex;
+            justify-content: center;
+            margin: 20px auto;
+            padding: 10px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .navigation ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .navigation ul li {
+            margin: 5px;
+        }
+
+        .navigation ul li a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 10px 15px;
+            border-radius: 25px;
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .navigation ul li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .navigation ul li a .icon {
+            margin-right: 5px;
+            font-size: 18px;
+        }
+
+        .navigation ul li.active a {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Resume Button in Navigation */
+        .navigation ul li.resume-button a {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .navigation ul li.resume-button a:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Content Section */
+        .content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+            opacity: 1;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .section h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .section p {
+            font-size: 1em;
+            line-height: 1.6;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Projects Section */
+        .projects {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+        }
+
+        .project-card p {
+            font-size: 0.9em;
+            margin: 0 0 15px;
+        }
+
+        .project-card a {
+            display: inline-block;
+            padding: 8px 15px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .project-card a:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Skills Section */
+        .skills {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: 200px;
+            text-align: center;
+        }
+
+        .skill-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+        }
+
+        .skill-card p {
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .testimonial-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+        }
+
+        .testimonial-card p {
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--card-bg);
+            margin-top: 40px;
+        }
+
+        footer a {
+            margin: 0 10px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        footer a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Back-to-Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+        }
+
+        .back-to-top.show {
+            display: block;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            0% { transform: translateY(-20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .navigation ul li a {
+                padding: 8px 12px;
+                font-size: 0.8em;
+            }
+
+            .section h2 {
+                font-size: 1.8em;
+            }
+
+            .section p {
+                font-size: 0.9em;
+            }
+
+            .project-card {
+                padding: 15px;
+            }
+
+            .skill-card {
+                max-width: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .navigation ul li a {
+                padding: 6px 10px;
+                font-size: 0.7em;
+            }
+
+            .section h2 {
+                font-size: 1.5em;
+            }
+
+            .section p {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <ion-icon name="contrast-outline"></ion-icon>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>YENIGANDLA MANOJ KUMAR</h1>
+        <div class="navigation">
+            <ul>
+                <li class="list active" data-target="home">
+                    <a href="#">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        Home
+                    </a>
+                </li>
+                <li class="list" data-target="contact">
+                    <a href="#">
+                        <span class="icon"><ion-icon name="call-outline"></ion-icon></span>
+                        Contact
+                    </a>
+                </li>
+                <li class="list" data-target="about">
+                    <a href="#">
+                        <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                        About
+                    </a>
+                </li>
+                <li class="list" data-target="projects">
+                    <a href="#">
+                        <span class="icon"><ion-icon name="briefcase-outline"></ion-icon></span>
+                        Projects
+                    </a>
+                </li>
+                <li class="list" data-target="skills">
+                    <a href="#">
+                        <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+                        Skills
+                    </a>
+                </li>
+                <li class="list resume-button">
+                    <a href="path/to/your/resume.pdf" download>
+                        <span class="icon"><ion-icon name="document-outline"></ion-icon></span>
+                        Resume
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Content Section -->
+    <div class="content">
+        <div id="home" class="section active">
+            <h2>Welcome to My Portfolio</h2>
+            <p>Hi, I'm Manoj Kumar, a passionate learner and aspiring developer. Explore my work and skills below!</p>
+        </div>
+
+        <div id="contact" class="section">
+            <h2>Contact Info</h2>
+            <p>Phone: +91 8309497402</p>
+            <p>Email: y.manoj6232@gmail.com</p>
+        </div>
+
+        <div id="about" class="section">
+            <h2>About Myself</h2>
+            <p>
+                Hello, my name is Manoj Kumar, and I am currently pursuing a diploma at Aditya College of Engineering. 
+                I have developed strong technical skills in web technologies such as HTML, CSS, and JavaScript, as well as experience in C programming and prompt engineering.
+                I’ve worked on several projects, including a 'Finding the Colour' game and a quiz game, both of which I built using HTML, CSS, and JavaScript. 
+                These projects have not only strengthened my coding skills but also taught me valuable lessons in problem-solving and creativity.
+            </p>
+        </div>
+
+        <div id="projects" class="section">
+            <h2>Projects</h2>
+            <div class="projects">
+                <div class="project-card">
+                    <h3>Quiz Game</h3>
+                    <p>A fun and interactive quiz game built with HTML, CSS, and JavaScript.</p>
+                    <a href="quizgame.html">View Project</a>
+                </div>
+                <div class="project-card">
+                    <h3>Find the Colour</h3>
+                    <p>A color-based game to test your reflexes and knowledge of colors.</p>
+                    <a href="colorgame.html">View Project</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="skills" class="section">
+            <h2>Skills</h2>
+            <div class="skills">
+                <div class="skill-card">
+                    <h3>HTML</h3>
+                </div>
+                <div class="skill-card">
+                    <h3>CSS</h3>
+                </div>
+                <div class="skill-card">
+                    <h3>JavaScript</h3>
+                </div>
+                <div class="skill-card">
+                    <h3>C Programming</h3>
+                </div>
+            </div>
+        </div>
+
+        <div id="testimonials" class="section">
+            <h2>Testimonials</h2>
+            <div class="testimonials">
+                <div class="testimonial-card">
+                    <h3>John Doe</h3>
+                    <p>"Manoj is a talented developer with a great eye for detail."</p>
+                </div>
+                <div class="testimonial-card">
+                    <h3>Jane Smith</h3>
+                    <p>"His projects are innovative and well-executed."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <a href="https://github.com/Manoj411kumar" target="_blank"><ion-icon name="logo-github"></ion-icon></a>
+        <a href="www.linkedin.com/in/yenigandla-manoj-kumar" target="_blank"><ion-icon name="logo-linkedin"></ion-icon></a>
+        <a href="y.manoj6232@gmail.com"><ion-icon name="mail-outline"></ion-icon></a>
+    </footer>
+
+    <!-- Back-to-Top Button -->
+    <div class="back-to-top" onclick="scrollToTop()">
+        <ion-icon name="arrow-up-outline"></ion-icon>
+    </div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const newTheme = body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Set theme from localStorage
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+
+        // Navigation and Section Switching
+        const listItems = document.querySelectorAll('.navigation ul li');
+        const sections = document.querySelectorAll('.section');
+
+        listItems.forEach(item => {
+            item.addEventListener('click', () => {
+                listItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                sections.forEach(section => section.classList.remove('active'));
+                const target = item.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+
+        // Back-to-Top Button
+        const backToTopButton = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
